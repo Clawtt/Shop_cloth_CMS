@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="002_create_product-type_table_14.03.24.xml" relativeToChangelogFile="true"/>
+    <include file="001_create_product_table_14.03.24.xml" relativeToChangelogFile="true"/>
+    <include file="003_create_table_customer_24.03.24.xml" relativeToChangelogFile="true"/>
+    <include file="004_create_table_address_24.03.24.xml" relativeToChangelogFile="true"/>
+    <include file="004_create_tables_order_26.03.24.xml" relativeToChangelogFile="true"/>
+
+
+    <include file="../testData/product.sql" relativeToChangelogFile="true"/>
+    <include file="../testData/product_type.sql" relativeToChangelogFile="true"/>
+    <include file="../testData/products_types.sql" relativeToChangelogFile="true"/>
+</databaseChangeLog>

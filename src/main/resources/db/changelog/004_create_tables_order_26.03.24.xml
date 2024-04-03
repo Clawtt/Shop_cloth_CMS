@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="0" author="admin">
+        <createTable tableName="order_app">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" unique="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="completed_at" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+            <column name="completed" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="order_customer">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="order_id" type="BIGINT">
+                <constraints foreignKeyName="fk_order_customer_order_id"
+                             referencedColumnNames="id"
+                             referencedTableName="order_app"
+                             primaryKey="true"/>
+            </column>
+            <column name="customer_id" type="BIGINT">
+                <constraints foreignKeyName="fk_order_customer_customer_id"
+                             referencedColumnNames="id"
+                             referencedTableName="customer"
+                primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="order_product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="order_id" type="BIGINT">
+                <constraints foreignKeyName="fk_order_product_order_id"
+                             referencedColumnNames="id"
+                             referencedTableName="order_app"
+                             primaryKey="true"/>
+            </column>
+            <column name="product_id" type="BIGINT">
+                <constraints foreignKeyName="fk_order_product_product_id"
+                             referencedColumnNames="id"
+                             referencedTableName="product"
+                             primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
