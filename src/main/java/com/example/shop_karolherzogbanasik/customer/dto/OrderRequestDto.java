@@ -4,14 +4,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
 
-@Data
+
 @NoArgsConstructor
+@Data
 public class OrderRequestDto {
 
 
-    private CustomerRequestDto customer;
+    private CustomerDto customer;
 
-    private List<AddressRequestDto> addresses;
+    private List<AddressDto> addresses;
 
     private List<Long> productIds;
 

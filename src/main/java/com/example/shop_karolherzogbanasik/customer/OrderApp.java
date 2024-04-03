@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class OrderApp {
 
     @Id
@@ -23,13 +23,8 @@ public class OrderApp {
     private LocalDateTime completedAt;
     private boolean completed;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "order_customer",
-            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    )
-    private List<Customer> customers = new ArrayList<>();
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
+    private Customer customer;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
@@ -40,8 +35,5 @@ public class OrderApp {
 
     public void addProduct(Product product) {
         products.add(product);
-    }
-    public void addCustomer(Customer customer) {
-        customers.add(customer);
     }
 }

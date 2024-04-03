@@ -1,12 +1,12 @@
 package com.example.shop_karolherzogbanasik.customer.dto.mapper;
 
 import com.example.shop_karolherzogbanasik.customer.Customer;
-import com.example.shop_karolherzogbanasik.customer.dto.CustomerRequestDto;
+import com.example.shop_karolherzogbanasik.customer.dto.CustomerDto;
 
 public class CustomerMapper {
 
-    public static CustomerRequestDto map(Customer customer) {
-        return new CustomerRequestDto(
+    public static CustomerDto map(Customer customer) {
+        return new CustomerDto(
                 customer.getFirstName(),
                 customer.getLastName(),
                 customer.getPhoneNumber(),

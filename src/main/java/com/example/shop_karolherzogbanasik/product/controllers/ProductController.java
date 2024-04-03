@@ -116,7 +116,7 @@ public class ProductController {
                 .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoElementFoundException.class)
     Map<String, String> handleNoElementFoundException(NoElementFoundException exception) {
         HashMap<String, String> exMap = new HashMap<>();

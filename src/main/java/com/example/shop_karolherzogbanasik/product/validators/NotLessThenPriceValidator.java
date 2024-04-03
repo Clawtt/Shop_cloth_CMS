@@ -21,9 +21,9 @@ public class NotLessThenPriceValidator implements ConstraintValidator<PriceGreat
 
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         try {
-            BigDecimal firstValue = (BigDecimal) getFieldValue(value, basePrice);
-            BigDecimal secondValue = (BigDecimal) getFieldValue(value, discountPrice);
-            return firstValue.compareTo(secondValue) >= 0;
+            BigDecimal baseValue = (BigDecimal) getFieldValue(value, basePrice);
+            BigDecimal discountValue = (BigDecimal) getFieldValue(value, discountPrice);
+            return baseValue.compareTo(discountValue) >= 0;
         } catch (IllegalAccessException | NoSuchFieldException e) {
             return false;
         }

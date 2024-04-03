@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressRequestDto {
+public class AddressDto {
 
     private boolean shippingAddress;
 
