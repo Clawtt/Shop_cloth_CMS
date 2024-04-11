@@ -100,28 +100,15 @@ public class ProductController {
      */
     @DeleteMapping("/product/delete/{id}")
     public ResponseEntity<ProductDto> deleteProduct(@PathVariable Long id) {
-        if (!productService.getProductById(id).isEmpty()) {
+        productService.getProductById(id).orElseThrow(
+                () -> new NoElementFoundException("product with %d id doesn't exist".formatted(id)
+        ));
+        if (productService.getProductById(id).isPresent()) {
             productService.deleteProduct(id);
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    Map<String, String> handleMethodArgumentNotValidEx(MethodArgumentNotValidException exception) {
-        return exception.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoElementFoundException.class)
-    Map<String, String> handleNoElementFoundException(NoElementFoundException exception) {
-        HashMap<String, String> exMap = new HashMap<>();
-        exMap.put("message", exception.getMessage());
-        return exMap;
-    }
 }
 

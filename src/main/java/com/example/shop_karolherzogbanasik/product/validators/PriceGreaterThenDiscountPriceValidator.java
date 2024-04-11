@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 
 
-public class NotLessThenPriceValidator implements ConstraintValidator<PriceGreaterThenDiscountPrice, Object> {
+public class PriceGreaterThenDiscountPriceValidator implements ConstraintValidator<PriceGreaterThenDiscountPrice, Object> {
 
     private String basePrice;
     private String discountPrice;
@@ -36,24 +36,3 @@ public class NotLessThenPriceValidator implements ConstraintValidator<PriceGreat
     }
 }
 
-// declared types doesn't valid data (why!?)
-//    @Override
-//    public boolean isValid(BigDecimal value, ConstraintValidatorContext context) {
-//
-//        BigDecimal bigDecimalPrice = getFieldValue(value, basePrice);
-//        BigDecimal bigDecimalDiscPrice = getFieldValue(value, discountPrice);
-//        return bigDecimalPrice.compareTo(bigDecimalDiscPrice) >= 0;
-//
-//    }
-//
-//    private BigDecimal getFieldValue(BigDecimal object, String fieldName) {
-//        Class<?> clazz = object.getClass();
-//        try {
-//            Field declaredField = clazz.getDeclaredField(fieldName);
-//            declaredField.setAccessible(true);
-//            return (BigDecimal) declaredField.get(object);
-//        } catch (NoSuchFieldException | IllegalAccessException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//}

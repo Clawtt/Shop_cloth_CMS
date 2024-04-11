@@ -1,4 +1,4 @@
-package com.example.shop_karolherzogbanasik.customer.dto;
+package com.example.shop_karolherzogbanasik.order.dto;
 
 import com.example.shop_karolherzogbanasik.product.Product;
 import lombok.AllArgsConstructor;

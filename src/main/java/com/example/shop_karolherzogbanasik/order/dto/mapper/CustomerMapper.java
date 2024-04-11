@@ -1,7 +1,7 @@
-package com.example.shop_karolherzogbanasik.customer.dto.mapper;
+package com.example.shop_karolherzogbanasik.order.dto.mapper;
 
-import com.example.shop_karolherzogbanasik.customer.Customer;
-import com.example.shop_karolherzogbanasik.customer.dto.CustomerDto;
+import com.example.shop_karolherzogbanasik.order.Customer;
+import com.example.shop_karolherzogbanasik.order.dto.CustomerDto;
 
 public class CustomerMapper {
 

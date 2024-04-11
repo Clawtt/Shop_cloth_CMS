@@ -22,6 +22,7 @@ public class ProductDto {
     @DecimalMin(value = "1")
     private BigDecimal price;
 
+
     private List<String> types;
 
     @DecimalMin(value = "1")

@@ -1,18 +1,17 @@
-package com.example.shop_karolherzogbanasik.customer;
+package com.example.shop_karolherzogbanasik.order;
 
 import com.example.shop_karolherzogbanasik.product.Product;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class OrderApp {
 

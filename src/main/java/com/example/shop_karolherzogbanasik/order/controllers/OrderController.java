@@ -1,8 +1,8 @@
-package com.example.shop_karolherzogbanasik.customer.controllers;
+package com.example.shop_karolherzogbanasik.order.controllers;
 
-import com.example.shop_karolherzogbanasik.customer.dto.OrderRequestDto;
-import com.example.shop_karolherzogbanasik.customer.dto.OrderResponseDto;
-import com.example.shop_karolherzogbanasik.customer.services.OrderService;
+import com.example.shop_karolherzogbanasik.order.dto.OrderRequestDto;
+import com.example.shop_karolherzogbanasik.order.dto.OrderResponseDto;
+import com.example.shop_karolherzogbanasik.order.services.OrderService;
 import com.example.shop_karolherzogbanasik.exceptions.NoElementFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -43,11 +43,11 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(orderResponseDto);
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoElementFoundException.class)
-    Map<String, String> handleNoElementFoundException(NoElementFoundException exception) {
-        HashMap<String, String> exMap = new HashMap<>();
-        exMap.put("message", exception.getMessage());
-        return exMap;
+    @PatchMapping("/order/{id}")
+    public ResponseEntity<OrderResponseDto> completeOrder(@PathVariable Long id,
+                                                          @RequestParam(required = true, defaultValue = "true", name = "completed") String isCompleted) {
+        boolean isCompletedAsBoolean = Boolean.parseBoolean(isCompleted);
+        orderService.completeOrder(id, isCompletedAsBoolean);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

@@ -1,9 +1,9 @@
-package com.example.shop_karolherzogbanasik.customer.dto.mapper;
+package com.example.shop_karolherzogbanasik.order.dto.mapper;
 
-import com.example.shop_karolherzogbanasik.customer.Address;
-import com.example.shop_karolherzogbanasik.customer.OrderApp;
-import com.example.shop_karolherzogbanasik.customer.dto.AddressDto;
-import com.example.shop_karolherzogbanasik.customer.dto.OrderResponseDto;
+import com.example.shop_karolherzogbanasik.order.Address;
+import com.example.shop_karolherzogbanasik.order.OrderApp;
+import com.example.shop_karolherzogbanasik.order.dto.AddressDto;
+import com.example.shop_karolherzogbanasik.order.dto.OrderResponseDto;
 import com.example.shop_karolherzogbanasik.product.Product;
 
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ public class OrderMapper {
             addressDto.setInvoiceAddress(address.isInvoiceAddress());
             addressDto.setStreet(address.getStreet());
             addressDto.setStreetNo(address.getStreetNo());
-            addressDto.setStreetNo(address.getZipCode());
-            addressDto.setStreetNo(address.getCity());
+            addressDto.setZipCode(address.getZipCode());
+            addressDto.setCity(address.getCity());
             addresses.add(addressDto);
         }
         return addresses;

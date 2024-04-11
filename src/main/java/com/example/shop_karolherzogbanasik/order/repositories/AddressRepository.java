@@ -1,6 +1,6 @@
-package com.example.shop_karolherzogbanasik.customer.repositories;
+package com.example.shop_karolherzogbanasik.order.repositories;
 
-import com.example.shop_karolherzogbanasik.customer.Address;
+import com.example.shop_karolherzogbanasik.order.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

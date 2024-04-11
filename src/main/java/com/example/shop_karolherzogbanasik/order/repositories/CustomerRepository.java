@@ -1,7 +1,6 @@
-package com.example.shop_karolherzogbanasik.customer.repositories;
+package com.example.shop_karolherzogbanasik.order.repositories;
 
-import com.example.shop_karolherzogbanasik.customer.Customer;
-import jakarta.validation.constraints.NotNull;
+import com.example.shop_karolherzogbanasik.order.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
 
