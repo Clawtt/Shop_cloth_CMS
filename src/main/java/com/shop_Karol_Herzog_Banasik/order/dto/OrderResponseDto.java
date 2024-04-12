@@ -1,14 +1,17 @@
 package com.shop_Karol_Herzog_Banasik.order.dto;
 
-import com.shop_Karol_Herzog_Banasik.product.Product;
+import com.shop_Karol_Herzog_Banasik.product.dto.ProductDto;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Data
 public class OrderResponseDto {
 
@@ -20,16 +23,8 @@ public class OrderResponseDto {
 
     private boolean completed;
 
-    private String firstName;
+    private CustomerResponseDto customerResponseDto;
 
-    private String lastName;
-
-    private Integer phoneNumber;
-
-    private String email;
-
-    List<AddressDto> addresses;
-
-    private List<Product> products;
+    private List<ProductDto> products;
 
 }

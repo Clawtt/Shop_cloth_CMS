@@ -1,5 +1,6 @@
 package com.shop_Karol_Herzog_Banasik.order.services;
 
+import com.shop_Karol_Herzog_Banasik.LocalDateTimeProvider;
 import com.shop_Karol_Herzog_Banasik.order.Address;
 import com.shop_Karol_Herzog_Banasik.order.Customer;
 import com.shop_Karol_Herzog_Banasik.order.OrderApp;
@@ -12,6 +13,7 @@ import com.shop_Karol_Herzog_Banasik.order.repositories.CustomerRepository;
 import com.shop_Karol_Herzog_Banasik.order.repositories.OrderRepository;
 import com.shop_Karol_Herzog_Banasik.exceptions.NoElementFoundException;
 import com.shop_Karol_Herzog_Banasik.product.Product;
+import com.shop_Karol_Herzog_Banasik.product.ProductRepository;
 import com.shop_Karol_Herzog_Banasik.product.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
+    private final LocalDateTimeProvider currentTime;
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final AddressRepository addressRepository;
@@ -44,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
                     () -> new NoElementFoundException("product with %d id doesn't exist".formatted(id)));
             order.addProduct(product);
         }
-        order.setCreatedAt(orderRequestDto.getCreatedAt());
+        order.setCreatedAt(currentTime.currentTime());
         order.setCompleted(orderRequestDto.isCompleted());
         order.setCustomer(customer);
         orderRepository.save(order);

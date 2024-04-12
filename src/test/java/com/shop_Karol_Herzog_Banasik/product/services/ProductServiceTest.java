@@ -5,13 +5,13 @@ import com.shop_Karol_Herzog_Banasik.product.Product;
 import com.shop_Karol_Herzog_Banasik.product.ProductRepository;
 import com.shop_Karol_Herzog_Banasik.product.ProductType;
 import com.shop_Karol_Herzog_Banasik.product.dto.ProductDto;
+import com.shop_Karol_Herzog_Banasik.product.dto.ProductTypeDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -41,14 +41,13 @@ public class ProductServiceTest {
     public void init() {
         MockitoAnnotations.openMocks(this);
         productService = new ProductServiceImpl(productRepository);
-        List<String> types = List.of("man", "adult", "summer");
-        List<ProductType> productTypes = List.of(
-                new ProductType(1L, types.get(0)),
-                new ProductType(2L, types.get(1)),
-                new ProductType(3L, types.get(2))
+        List<ProductTypeDto> types = List.of(
+                new ProductTypeDto(1L, "man"),
+                new ProductTypeDto(2L, "summer"),
+                new ProductTypeDto(3L, "woman")
         );
         productDto = new ProductDto(
-                null,
+                0L,
                 "T-Shirt",
                 BigDecimal.valueOf(100),
                 types,
@@ -85,7 +84,6 @@ public class ProductServiceTest {
     public void getAllProductsWithPage() {
         //given
         Page<Product> products = Mockito.mock(Page.class);
-        ProductServiceImpl productService = new ProductServiceImpl(productRepository);
         when(productRepository.findAll(Mockito.any(Pageable.class))).thenReturn(products);
 
         //when
@@ -135,26 +133,18 @@ public class ProductServiceTest {
     @ValueSource(longs = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     public void updateProduct(Long id) {
         //given
+        long empty = 0L;
+        when(productRepository.findById(empty)).thenReturn(Optional.empty());
         when(productRepository.findById(id)).thenReturn(Optional.of(product));
         when(productRepository.save(product)).thenReturn(product);
         //when
-        productService.updateProduct(productDto, id);
+        productService.updateProductAndProductType(productDto, id);
         //then
         Mockito.verify(productRepository).findById(id);
-    }
-
-    @Test
-    @DisplayName("Should throw NoElementFoundException")
-    public void shouldThrowNoElementFoundException() {
-        //given
-        long id = 0L;
-        BDDMockito.given(productRepository.findById(id))
-                .willThrow(new NoElementFoundException("product at %d id has no exist".formatted(id)));
-
         //when and then
-        Assertions.assertThatThrownBy(() -> productService.updateProduct(productDto, id))
+        Assertions.assertThatThrownBy(() -> productService.updateProductAndProductType(productDto, empty))
                 .isInstanceOf(NoElementFoundException.class)
-                .hasMessage("product at %d id has no exist".formatted(id));
+                .hasMessage("product at %d id has no exist".formatted(empty));
     }
 
     @ParameterizedTest
@@ -162,10 +152,16 @@ public class ProductServiceTest {
     @ValueSource(longs = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     public void deleteProduct(Long id) {
         //given
+        long empty = 0L;
+        when(productRepository.findById(empty)).thenReturn(Optional.empty());
         when(productRepository.findById(id)).thenReturn(Optional.of(product));
         //when
         productService.deleteProduct(id);
         //then
         Mockito.verify(productRepository).findById(id);
+        //when and then
+        Assertions.assertThatThrownBy(() -> productService.deleteProduct(empty))
+                .isInstanceOf(NoElementFoundException.class)
+                .hasMessage("product at %d id has no exist".formatted(empty));
     }
 }

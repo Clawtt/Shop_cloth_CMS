@@ -16,7 +16,7 @@ public interface ProductService {
     Optional<ProductDto> getProductById(Long id);
     Optional<Product> findProductById(Long id);
 
-    void updateProduct(ProductDto productDto, Long id);
+    void updateProductAndProductType(ProductDto productDto, Long id);
 
     void deleteProduct(Long id);
 }

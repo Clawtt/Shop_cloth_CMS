@@ -5,6 +5,7 @@ import com.shop_Karol_Herzog_Banasik.product.Product;
 import com.shop_Karol_Herzog_Banasik.product.ProductRepository;
 import com.shop_Karol_Herzog_Banasik.product.ProductType;
 import com.shop_Karol_Herzog_Banasik.product.dto.ProductDto;
+import com.shop_Karol_Herzog_Banasik.product.dto.ProductTypeDto;
 import com.shop_Karol_Herzog_Banasik.product.dto.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -69,17 +70,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public void updateProduct(ProductDto productDto, Long id) {
+    public void updateProductAndProductType(ProductDto productDto, Long id) {
         List<ProductType> types = new ArrayList<>();
-        ArrayList<String> dtoTypes = new ArrayList<>(productDto.getTypes());
+        ArrayList<ProductTypeDto> dtoTypes = new ArrayList<>(productDto.getTypes());
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new NoElementFoundException("product at %d id has no exist".formatted(id)));
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setDiscountPrice(productDto.getDiscountPrice());
-        for (String type : dtoTypes) {
+        for (ProductTypeDto type : dtoTypes) {
             ProductType productType = new ProductType();
-            productType.setName(type);
+            productType.setName(type.getName());
             types.add(productType);
         }
         product.setTypes(types);

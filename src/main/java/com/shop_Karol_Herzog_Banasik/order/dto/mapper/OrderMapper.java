@@ -1,44 +1,60 @@
 package com.shop_Karol_Herzog_Banasik.order.dto.mapper;
 
-import com.shop_Karol_Herzog_Banasik.order.Address;
 import com.shop_Karol_Herzog_Banasik.order.OrderApp;
 import com.shop_Karol_Herzog_Banasik.order.dto.AddressDto;
+import com.shop_Karol_Herzog_Banasik.order.dto.CustomerRequestDto;
+import com.shop_Karol_Herzog_Banasik.order.dto.CustomerResponseDto;
 import com.shop_Karol_Herzog_Banasik.order.dto.OrderResponseDto;
-import com.shop_Karol_Herzog_Banasik.product.Product;
+import com.shop_Karol_Herzog_Banasik.product.dto.ProductDto;
+import com.shop_Karol_Herzog_Banasik.product.dto.ProductTypeDto;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderMapper {
 
     public static OrderResponseDto map(OrderApp order) {
-        List<Product> products = new ArrayList<>(order.getProducts());
-        List<AddressDto> addresses = mapAddress(order);
+        List<ProductDto> products = order.getProducts()
+                .stream()
+                .map(product -> {
+                    ProductDto productDto = new ProductDto(
+                            product.getId(),
+                            product.getName(),
+                            product.getPrice(),
+                            product.getTypes().stream()
+                                    .map(productType -> new ProductTypeDto(productType.getId(), productType.getName()))
+                                    .collect(Collectors.toList()),
+                            product.getDiscountPrice());
+                    return productDto;
+                }).collect(Collectors.toList());
+
         return new OrderResponseDto(
                 order.getId(),
                 order.getCreatedAt(),
                 order.getCompletedAt(),
                 order.isCompleted(),
-                order.getCustomer().getFirstName(),
-                order.getCustomer().getLastName(),
-                order.getCustomer().getPhoneNumber(),
-                order.getCustomer().getEmail(),
-                addresses,
+                mapCustomer(order),
                 products
         );
     }
-    private static List<AddressDto> mapAddress(OrderApp order) {
-        List<AddressDto> addresses = new ArrayList<>();
-        for (Address address : order.getCustomer().getAddresses()) {
-            AddressDto addressDto = new AddressDto();
-            addressDto.setShippingAddress(address.isShippingAddress());
-            addressDto.setInvoiceAddress(address.isInvoiceAddress());
-            addressDto.setStreet(address.getStreet());
-            addressDto.setStreetNo(address.getStreetNo());
-            addressDto.setZipCode(address.getZipCode());
-            addressDto.setCity(address.getCity());
-            addresses.add(addressDto);
-        }
-        return addresses;
+
+    private static CustomerResponseDto mapCustomer(OrderApp order) {
+        CustomerResponseDto customerDto = new CustomerResponseDto();
+        customerDto.setId(order.getCustomer().getId());
+        customerDto.setFirstName(order.getCustomer().getFirstName());
+        customerDto.setLastName(order.getCustomer().getLastName());
+        customerDto.setPhoneNumber(order.getCustomer().getPhoneNumber());
+        customerDto.setEmail(order.getCustomer().getEmail());
+        customerDto.setAddresses(order.getCustomer().getAddresses()
+                .stream()
+                .map(address -> new AddressDto(
+                        address.isShippingAddress(),
+                        address.isInvoiceAddress(),
+                        address.getStreet(),
+                        address.getStreetNo(),
+                        address.getZipCode(),
+                        address.getCity()
+                )).collect(Collectors.toList()));
+        return customerDto;
     }
 }

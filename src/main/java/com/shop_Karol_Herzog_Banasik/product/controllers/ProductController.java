@@ -77,7 +77,7 @@ public class ProductController {
     public ResponseEntity<ProductDto> updateProduct(@Valid @RequestBody ProductDto productDto,
                                                     @PathVariable Long id) {
         if (productService.getProductById(id).isPresent()) {
-            productService.updateProduct(productDto, id);
+            productService.updateProductAndProductType(productDto, id);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.notFound().build();

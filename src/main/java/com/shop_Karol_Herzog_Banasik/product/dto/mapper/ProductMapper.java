@@ -1,22 +1,31 @@
 package com.shop_Karol_Herzog_Banasik.product.dto.mapper;
 
 import com.shop_Karol_Herzog_Banasik.product.Product;
-import com.shop_Karol_Herzog_Banasik.product.ProductType;
 import com.shop_Karol_Herzog_Banasik.product.dto.ProductDto;
+import com.shop_Karol_Herzog_Banasik.product.dto.ProductTypeDto;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductMapper {
 
     public static ProductDto map(Product product) {
+
+        List<ProductTypeDto> productTypeDtos = product.getTypes().stream()
+                .map(productType -> {
+                    ProductTypeDto productTypeDto = new ProductTypeDto(
+                            productType.getId(),
+                            productType.getName()
+                    );
+                    return productTypeDto;
+                }).collect(Collectors.toList());
+
+
         return new ProductDto(
                 product.getId(),
                 product.getName(),
                 product.getPrice(),
-                product.getTypes()
-                        .stream()
-                        .map(ProductType::getName)
-                        .collect(Collectors.toList()),
+                productTypeDtos,
                 product.getDiscountPrice());
     }
 }
