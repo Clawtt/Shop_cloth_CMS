@@ -41,7 +41,7 @@ public class ProductServiceTest {
     public void init() {
         MockitoAnnotations.openMocks(this);
         productService = new ProductServiceImpl(productRepository);
-        List<ProductTypeDto> types = List.of(
+        List<ProductTypeDto> typesDto = List.of(
                 new ProductTypeDto(1L, "man"),
                 new ProductTypeDto(2L, "summer"),
                 new ProductTypeDto(3L, "woman")
@@ -50,20 +50,19 @@ public class ProductServiceTest {
                 0L,
                 "T-Shirt",
                 BigDecimal.valueOf(100),
-                types,
+                typesDto,
                 BigDecimal.valueOf(90)
         );
-        ArrayList<ProductType> typess = new ArrayList<>();
-        productDto.getTypes()
+        List<ProductType> types = productDto.getTypes()
                 .stream()
-                .map(type -> types)
+                .map(type -> new ProductType(type.getId(), type.getName()))
                 .collect(Collectors.toList());
         product = new Product(
                 null,
                 productDto.getName(),
                 productDto.getPrice(),
                 productDto.getDiscountPrice(),
-                typess
+                types
         );
     }
 
