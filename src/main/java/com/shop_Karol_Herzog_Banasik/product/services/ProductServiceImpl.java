@@ -44,10 +44,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void saveNewProduct(ProductDto productDto) {
-        ArrayList<ProductType> types = new ArrayList<>();
-        productDto.getTypes()
+        List<ProductType> types = productDto.getTypes()
                 .stream()
-                .map(type -> types)
+                .map(t -> new ProductType(t.getId(), t.getName()))
                 .collect(Collectors.toList());
         Product product = new Product();
         product.setName(productDto.getName());
