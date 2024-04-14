@@ -23,6 +23,10 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
+    /**
+     *
+     * @return list of products
+     */
     @Override
     public List<ProductDto> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>(productRepository.findAll());
@@ -31,6 +35,12 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
 
     }
+
+    /**
+     *
+     * @param pageSize the number of the products to be returned
+     * @return list of products
+     */
 
     @Override
     public List<ProductDto> getAllProducts(int pageSize) {
@@ -42,6 +52,10 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     *
+     * @param productDto product to save in database
+     */
     @Override
     public void saveNewProduct(ProductDto productDto) {
         List<ProductType> types = productDto.getTypes()
@@ -56,20 +70,25 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
+    /**
+     *
+     * @param id of product from database
+     * @return product from database
+     */
     @Override
     public Optional<ProductDto> getProductById(Long id) {
         return productRepository.findById(id)
                 .map(ProductMapper::map);
     }
 
-    @Override
-    public Optional<Product> findProductById(Long id) {
-        return productRepository.findById(id);
-    }
-
+    /**
+     *
+     * @param id to find product to updating
+     * @param productDto new product
+     */
     @Transactional
     @Override
-    public void updateProductAndProductType(ProductDto productDto, Long id) {
+    public void updateProductAndProductType(Long id, ProductDto productDto) {
         List<ProductType> types = new ArrayList<>();
         ArrayList<ProductTypeDto> dtoTypes = new ArrayList<>(productDto.getTypes());
         Product product = productRepository.findById(id).orElseThrow(
@@ -77,6 +96,7 @@ public class ProductServiceImpl implements ProductService {
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setDiscountPrice(productDto.getDiscountPrice());
+
         for (ProductTypeDto type : dtoTypes) {
             ProductType productType = new ProductType();
             productType.setName(type.getName());
@@ -85,10 +105,15 @@ public class ProductServiceImpl implements ProductService {
         product.setTypes(types);
     }
 
+    /**
+     *
+     * @param id of product to remove from database
+     */
     @Override
     public void deleteProduct(Long id) {
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new NoElementFoundException("product at %d id has no exist".formatted(id)));
+
         productRepository.delete(product);
     }
 }

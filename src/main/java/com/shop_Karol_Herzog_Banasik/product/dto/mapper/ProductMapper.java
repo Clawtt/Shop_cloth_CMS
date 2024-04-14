@@ -12,13 +12,10 @@ public class ProductMapper {
     public static ProductDto map(Product product) {
 
         List<ProductTypeDto> productTypeDtos = product.getTypes().stream()
-                .map(productType -> {
-                    ProductTypeDto productTypeDto = new ProductTypeDto(
-                            productType.getId(),
-                            productType.getName()
-                    );
-                    return productTypeDto;
-                }).collect(Collectors.toList());
+                .map(productType -> new ProductTypeDto(
+                        productType.getId(),
+                        productType.getName()))
+                .collect(Collectors.toList());
 
 
         return new ProductDto(

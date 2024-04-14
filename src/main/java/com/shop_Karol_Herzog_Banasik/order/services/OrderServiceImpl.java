@@ -14,13 +14,11 @@ import com.shop_Karol_Herzog_Banasik.order.repositories.OrderRepository;
 import com.shop_Karol_Herzog_Banasik.exceptions.NoElementFoundException;
 import com.shop_Karol_Herzog_Banasik.product.Product;
 import com.shop_Karol_Herzog_Banasik.product.ProductRepository;
-import com.shop_Karol_Herzog_Banasik.product.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,22 +31,22 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final AddressRepository addressRepository;
-    private final ProductService productService;
+    private final ProductRepository productRepository;
 
 
     @Transactional
     @Override
     public void addNewOrder(OrderRequestDto orderRequestDto) {
         OrderApp order = new OrderApp();
-        Customer customer = configureCustomerWithAddress(orderRequestDto);
+        Customer customer = setCustomerWithAddresses(orderRequestDto);
         List<Long> productIds = orderRequestDto.getProductIds();
         for (Long id : productIds) {
-            Product product = productService.findProductById(id).orElseThrow(
+            Product product = productRepository.findById(id).orElseThrow(
                     () -> new NoElementFoundException("product with %d id doesn't exist".formatted(id)));
             order.addProduct(product);
         }
         order.setCreatedAt(currentTime.currentTime());
-        order.setCompleted(orderRequestDto.isCompleted());
+        order.setCompleted(false);
         order.setCustomer(customer);
         orderRepository.save(order);
     }
@@ -74,12 +72,14 @@ public class OrderServiceImpl implements OrderService {
         OrderApp orderApp = orderRepository.findById(id).orElseThrow(
                 () -> new NoElementFoundException("order with %d id doesn't exist".formatted(id)));
         orderApp.setCompleted(isCompleted);
-        orderApp.setCompletedAt(LocalDateTime.now());
+        orderApp.setCompletedAt(currentTime.currentTime());
+        orderRepository.save(orderApp);
     }
 
-    private Customer configureCustomerWithAddress(OrderRequestDto orderRequestDto) {
+    private Customer setCustomerWithAddresses(OrderRequestDto orderRequestDto) {
         Customer customer = new Customer();
-        for (AddressDto addressRequestDto : new ArrayList<>(orderRequestDto.getAddresses())) {
+        for (AddressDto addressRequestDto : new ArrayList<>(
+                orderRequestDto.getCustomer().getAddresses())) {
             Address address = new Address();
             address.setShippingAddress(addressRequestDto.isShippingAddress());
             address.setInvoiceAddress(addressRequestDto.isInvoiceAddress());

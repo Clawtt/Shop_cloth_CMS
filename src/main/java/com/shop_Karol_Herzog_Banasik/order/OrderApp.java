@@ -20,7 +20,7 @@ public class OrderApp {
     private Long id;
     private LocalDateTime createdAt;
     private LocalDateTime completedAt;
-    private boolean completed;
+    private boolean isCompleted;
 
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Customer customer;

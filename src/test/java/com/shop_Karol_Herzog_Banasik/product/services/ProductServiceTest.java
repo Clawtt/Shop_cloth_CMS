@@ -19,7 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -93,7 +92,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("Should save new product in database")
+    @DisplayName("Should save new product")
     public void saveNewProduct() {
         //given
         when(productRepository.save(any(Product.class))).thenReturn(product);
@@ -104,25 +103,13 @@ public class ProductServiceTest {
     }
 
     @ParameterizedTest
-    @DisplayName("Should get product DTO by id from database")
+    @DisplayName("Should get product by id")
     @ValueSource(longs = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     public void getProductById(Long id) {
         //give
         when(productRepository.findById(id)).thenReturn(Optional.of(product));
         //when
         Optional<ProductDto> productById = productService.getProductById(id);
-        //then
-        Assertions.assertThat(productById).isPresent();
-    }
-
-    @ParameterizedTest
-    @DisplayName("Should get product by id from database")
-    @ValueSource(longs = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
-    public void findProductById(Long id) {
-        //give
-        when(productRepository.findById(id)).thenReturn(Optional.of(product));
-        //when
-        Optional<Product> productById = productService.findProductById(id);
         //then
         Assertions.assertThat(productById).isPresent();
     }
@@ -137,11 +124,11 @@ public class ProductServiceTest {
         when(productRepository.findById(id)).thenReturn(Optional.of(product));
         when(productRepository.save(product)).thenReturn(product);
         //when
-        productService.updateProductAndProductType(productDto, id);
+        productService.updateProductAndProductType(id, productDto);
         //then
         Mockito.verify(productRepository).findById(id);
         //when and then
-        Assertions.assertThatThrownBy(() -> productService.updateProductAndProductType(productDto, empty))
+        Assertions.assertThatThrownBy(() -> productService.updateProductAndProductType(empty, productDto))
                 .isInstanceOf(NoElementFoundException.class)
                 .hasMessage("product at %d id has no exist".formatted(empty));
     }

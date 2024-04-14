@@ -1,12 +1,16 @@
 package com.shop_Karol_Herzog_Banasik.order.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Data
 public class CustomerRequestDto {
 
     private String firstName;
@@ -16,6 +20,8 @@ public class CustomerRequestDto {
     private Integer phoneNumber;
 
     private String email;
-    
+
+    private List<AddressDto> addresses;
+
 
 }

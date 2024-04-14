@@ -43,7 +43,7 @@ public class OrderController {
 
     @PatchMapping("/order/{id}")
     public ResponseEntity<OrderResponseDto> completeOrder(@PathVariable Long id,
-                                                          @RequestParam(required = true, defaultValue = "true", name = "completed") String isCompleted) {
+                                                          @RequestParam(defaultValue = "true", name = "isCompleted") String isCompleted) {
         boolean isCompletedAsBoolean = Boolean.parseBoolean(isCompleted);
         orderService.completeOrder(id, isCompletedAsBoolean);
         return ResponseEntity.status(HttpStatus.OK).build();

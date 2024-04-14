@@ -23,7 +23,7 @@ public class Product {
     private String name;
     private BigDecimal price;
     private BigDecimal discountPrice;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "products_types",
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),

@@ -2,7 +2,6 @@ package com.shop_Karol_Herzog_Banasik.order.dto.mapper;
 
 import com.shop_Karol_Herzog_Banasik.order.OrderApp;
 import com.shop_Karol_Herzog_Banasik.order.dto.AddressDto;
-import com.shop_Karol_Herzog_Banasik.order.dto.CustomerRequestDto;
 import com.shop_Karol_Herzog_Banasik.order.dto.CustomerResponseDto;
 import com.shop_Karol_Herzog_Banasik.order.dto.OrderResponseDto;
 import com.shop_Karol_Herzog_Banasik.product.dto.ProductDto;

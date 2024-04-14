@@ -15,7 +15,7 @@
             <column name="completed_at" type="DATETIME">
                 <constraints nullable="true"/>
             </column>
-            <column name="completed" type="BOOLEAN">
+            <column name="is_completed" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
             <column name="customer_id" type="BIGINT">
