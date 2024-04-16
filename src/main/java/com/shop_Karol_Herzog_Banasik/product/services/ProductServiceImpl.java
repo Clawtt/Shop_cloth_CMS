@@ -2,7 +2,7 @@ package com.shop_Karol_Herzog_Banasik.product.services;
 
 import com.shop_Karol_Herzog_Banasik.exceptions.NoElementFoundException;
 import com.shop_Karol_Herzog_Banasik.product.Product;
-import com.shop_Karol_Herzog_Banasik.product.ProductRepository;
+import com.shop_Karol_Herzog_Banasik.product.repositories.ProductRepository;
 import com.shop_Karol_Herzog_Banasik.product.ProductType;
 import com.shop_Karol_Herzog_Banasik.product.dto.ProductDto;
 import com.shop_Karol_Herzog_Banasik.product.dto.ProductTypeDto;
@@ -88,7 +88,7 @@ public class ProductServiceImpl implements ProductService {
      */
     @Transactional
     @Override
-    public void updateProductAndProductType(Long id, ProductDto productDto) {
+    public void updateProduct(Long id, ProductDto productDto) {
         List<ProductType> types = new ArrayList<>();
         ArrayList<ProductTypeDto> dtoTypes = new ArrayList<>(productDto.getTypes());
         Product product = productRepository.findById(id).orElseThrow(

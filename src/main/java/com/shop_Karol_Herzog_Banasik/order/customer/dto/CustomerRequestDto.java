@@ -1,4 +1,4 @@
-package com.shop_Karol_Herzog_Banasik.order.dto;
+package com.shop_Karol_Herzog_Banasik.order.customer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Data
-public class CustomerResponseDto {
-
-    private Long id;
+public class CustomerRequestDto {
 
     private String firstName;
 
@@ -24,5 +22,6 @@ public class CustomerResponseDto {
     private String email;
 
     private List<AddressDto> addresses;
+
 
 }

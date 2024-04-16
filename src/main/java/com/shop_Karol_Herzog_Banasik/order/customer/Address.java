@@ -1,4 +1,4 @@
-package com.shop_Karol_Herzog_Banasik.order;
+package com.shop_Karol_Herzog_Banasik.order.customer;
 
 import jakarta.persistence.*;
 import lombok.*;

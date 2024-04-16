@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PriceGreaterThenDiscountPrice {
-    String message() default "Discount price can not be greater than base price";
+    String message() default "${validatedValue} discountPrice can't be greater than field price";
 
     Class<?>[] groups() default {};
 

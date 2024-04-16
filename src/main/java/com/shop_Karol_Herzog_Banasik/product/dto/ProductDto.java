@@ -19,7 +19,7 @@ public class ProductDto {
 
     private Long id;
 
-    @NotNull(message = "field name can not be null")
+    @NotNull(message = "name can not be null")
     private String name;
 
     @DecimalMin(value = "1")

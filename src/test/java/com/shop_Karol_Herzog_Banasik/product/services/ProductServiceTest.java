@@ -2,7 +2,7 @@ package com.shop_Karol_Herzog_Banasik.product.services;
 
 import com.shop_Karol_Herzog_Banasik.exceptions.NoElementFoundException;
 import com.shop_Karol_Herzog_Banasik.product.Product;
-import com.shop_Karol_Herzog_Banasik.product.ProductRepository;
+import com.shop_Karol_Herzog_Banasik.product.repositories.ProductRepository;
 import com.shop_Karol_Herzog_Banasik.product.ProductType;
 import com.shop_Karol_Herzog_Banasik.product.dto.ProductDto;
 import com.shop_Karol_Herzog_Banasik.product.dto.ProductTypeDto;
@@ -55,14 +55,14 @@ public class ProductServiceTest {
         List<ProductType> types = productDto.getTypes()
                 .stream()
                 .map(type -> new ProductType(type.getId(), type.getName()))
-                .collect(Collectors.toList());
-        product = new Product(
-                null,
-                productDto.getName(),
-                productDto.getPrice(),
-                productDto.getDiscountPrice(),
-                types
-        );
+                .toList();
+
+        product =  Product.builder()
+                .id(null)
+                .name(productDto.getName())
+                .price(productDto.getPrice())
+                .discountPrice(productDto.getDiscountPrice())
+                .build();
     }
 
 
@@ -124,11 +124,11 @@ public class ProductServiceTest {
         when(productRepository.findById(id)).thenReturn(Optional.of(product));
         when(productRepository.save(product)).thenReturn(product);
         //when
-        productService.updateProductAndProductType(id, productDto);
+        productService.updateProduct(id, productDto);
         //then
         Mockito.verify(productRepository).findById(id);
         //when and then
-        Assertions.assertThatThrownBy(() -> productService.updateProductAndProductType(empty, productDto))
+        Assertions.assertThatThrownBy(() -> productService.updateProduct(empty, productDto))
                 .isInstanceOf(NoElementFoundException.class)
                 .hasMessage("product at %d id has no exist".formatted(empty));
     }
