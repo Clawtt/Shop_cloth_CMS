@@ -1,6 +1,5 @@
 package com.shop_Karol_Herzog_Banasik.product.services;
 
-import com.shop_Karol_Herzog_Banasik.product.Product;
 import com.shop_Karol_Herzog_Banasik.product.dto.ProductDto;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public interface ProductService {
 
     Optional<ProductDto> getProductById(Long id);
 
-    void updateProductAndProductType(Long id, ProductDto productDto);
+    void updateProduct(Long id, ProductDto productDto);
 
     void deleteProduct(Long id);
 }

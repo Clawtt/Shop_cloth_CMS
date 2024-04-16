@@ -8,6 +8,7 @@ public class ShopKarolHerzogBanasikApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ShopKarolHerzogBanasikApplication.class, args);
+        System.out.println(System.getProperty("user.dir"));
     }
 
 }

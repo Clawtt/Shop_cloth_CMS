@@ -1,6 +1,6 @@
 package com.shop_Karol_Herzog_Banasik.exceptions;
 
-import com.shop_Karol_Herzog_Banasik.product.ProductRepository;
+import com.shop_Karol_Herzog_Banasik.product.repositories.ProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

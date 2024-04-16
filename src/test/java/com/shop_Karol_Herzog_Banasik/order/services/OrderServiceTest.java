@@ -2,20 +2,19 @@ package com.shop_Karol_Herzog_Banasik.order.services;
 
 import com.shop_Karol_Herzog_Banasik.LocalDateTimeProvider;
 import com.shop_Karol_Herzog_Banasik.exceptions.NoElementFoundException;
-import com.shop_Karol_Herzog_Banasik.order.Address;
-import com.shop_Karol_Herzog_Banasik.order.Customer;
+import com.shop_Karol_Herzog_Banasik.order.customer.Address;
+import com.shop_Karol_Herzog_Banasik.order.customer.Customer;
 import com.shop_Karol_Herzog_Banasik.order.OrderApp;
-import com.shop_Karol_Herzog_Banasik.order.dto.AddressDto;
-import com.shop_Karol_Herzog_Banasik.order.dto.CustomerRequestDto;
+import com.shop_Karol_Herzog_Banasik.order.customer.dto.AddressDto;
+import com.shop_Karol_Herzog_Banasik.order.customer.dto.CustomerRequestDto;
 import com.shop_Karol_Herzog_Banasik.order.dto.OrderRequestDto;
 import com.shop_Karol_Herzog_Banasik.order.dto.OrderResponseDto;
 import com.shop_Karol_Herzog_Banasik.order.repositories.AddressRepository;
 import com.shop_Karol_Herzog_Banasik.order.repositories.CustomerRepository;
 import com.shop_Karol_Herzog_Banasik.order.repositories.OrderRepository;
 import com.shop_Karol_Herzog_Banasik.product.Product;
-import com.shop_Karol_Herzog_Banasik.product.ProductRepository;
+import com.shop_Karol_Herzog_Banasik.product.repositories.ProductRepository;
 import com.shop_Karol_Herzog_Banasik.product.ProductType;
-import com.shop_Karol_Herzog_Banasik.product.services.ProductService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -122,13 +121,13 @@ public class OrderServiceTest {
                 .addresses(addresses)
                 .build();
 
-        product = new Product(
-                1L,
-                "T-shirt",
-                BigDecimal.valueOf(2000),
-                BigDecimal.valueOf(1500),
-                List.of(productType)
-        );
+        product = Product.builder()
+                .id(1L)
+                .name("T-shirt")
+                .price(BigDecimal.valueOf(2000))
+                .discountPrice(BigDecimal.valueOf(1500))
+                .types(List.of(productType))
+                .build();
 
         orderRequestDto = OrderRequestDto.builder()
                 .customer(customerRequestDto)
