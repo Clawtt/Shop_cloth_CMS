@@ -1,4 +1,4 @@
-package com.shop_Karol_Herzog_Banasik.order.customer.dto;
+package com.shop_Karol_Herzog_Banasik.order.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

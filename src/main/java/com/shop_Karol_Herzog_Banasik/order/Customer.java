@@ -1,10 +1,11 @@
-package com.shop_Karol_Herzog_Banasik.order.customer;
+package com.shop_Karol_Herzog_Banasik.order;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Builder

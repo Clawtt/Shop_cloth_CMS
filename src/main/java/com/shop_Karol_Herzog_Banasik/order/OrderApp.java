@@ -1,6 +1,5 @@
 package com.shop_Karol_Herzog_Banasik.order;
 
-import com.shop_Karol_Herzog_Banasik.order.customer.Customer;
 import com.shop_Karol_Herzog_Banasik.product.Product;
 import jakarta.persistence.*;
 import lombok.*;

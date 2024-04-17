@@ -1,10 +1,10 @@
 package com.shop_Karol_Herzog_Banasik.order.services;
 
 import com.shop_Karol_Herzog_Banasik.LocalDateTimeProvider;
-import com.shop_Karol_Herzog_Banasik.order.customer.Address;
-import com.shop_Karol_Herzog_Banasik.order.customer.Customer;
+import com.shop_Karol_Herzog_Banasik.order.Address;
+import com.shop_Karol_Herzog_Banasik.order.Customer;
 import com.shop_Karol_Herzog_Banasik.order.OrderApp;
-import com.shop_Karol_Herzog_Banasik.order.customer.dto.AddressDto;
+import com.shop_Karol_Herzog_Banasik.order.dto.AddressDto;
 import com.shop_Karol_Herzog_Banasik.order.dto.OrderRequestDto;
 import com.shop_Karol_Herzog_Banasik.order.dto.OrderResponseDto;
 import com.shop_Karol_Herzog_Banasik.order.dto.mapper.OrderMapper;
@@ -13,7 +13,7 @@ import com.shop_Karol_Herzog_Banasik.order.repositories.CustomerRepository;
 import com.shop_Karol_Herzog_Banasik.order.repositories.OrderRepository;
 import com.shop_Karol_Herzog_Banasik.exceptions.NoElementFoundException;
 import com.shop_Karol_Herzog_Banasik.product.Product;
-import com.shop_Karol_Herzog_Banasik.product.repositories.ProductRepository;
+import com.shop_Karol_Herzog_Banasik.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

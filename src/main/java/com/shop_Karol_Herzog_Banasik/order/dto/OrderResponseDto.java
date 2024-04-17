@@ -1,6 +1,5 @@
 package com.shop_Karol_Herzog_Banasik.order.dto;
 
-import com.shop_Karol_Herzog_Banasik.order.customer.dto.CustomerResponseDto;
 import com.shop_Karol_Herzog_Banasik.product.dto.ProductDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

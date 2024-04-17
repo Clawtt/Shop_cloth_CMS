@@ -3,7 +3,6 @@ package com.shop_Karol_Herzog_Banasik.product.validators;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.*;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -16,7 +15,6 @@ public class PriceGreaterThenDiscountPriceValidatorTest {
 
 
     @Test
-    @DisplayName("Should return true if base price is equal or greater than discount price")
     public void isValidWithCorrectValues() {
         //given
         PriceGreaterThenDiscountPrice priceValidatorMock = mock(PriceGreaterThenDiscountPrice.class);

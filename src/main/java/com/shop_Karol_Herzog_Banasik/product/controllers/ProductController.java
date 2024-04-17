@@ -47,11 +47,10 @@ public class ProductController {
     }
 
     @PutMapping("/product/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@Valid
-                                                        @RequestBody ProductDto productDto,
-                                                        @PathVariable Long id) {
+    public ResponseEntity<ProductDto> updateProduct(@Valid @RequestBody ProductDto productDto,
+                                                    @PathVariable Long id) {
         if (productService.getProductById(id).isPresent()) {
-            productService.updateProduct(id, productDto);
+            productService.updateProductAndProductType(id, productDto);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.notFound().build();
@@ -69,5 +68,6 @@ public class ProductController {
         }
         return ResponseEntity.notFound().build();
     }
+
 }
 

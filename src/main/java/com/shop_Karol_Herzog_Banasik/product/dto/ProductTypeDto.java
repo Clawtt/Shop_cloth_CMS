@@ -13,10 +13,4 @@ public class ProductTypeDto {
 
     private Long id;
     private String name;
-
-    //that constructor is needed for correctly parsing by JACKSON
-    // *DO NOT DELETE*
-    public ProductTypeDto(String name) {
-        this.name = name;
-    }
 }

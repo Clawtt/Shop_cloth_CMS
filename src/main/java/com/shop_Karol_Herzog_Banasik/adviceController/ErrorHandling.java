@@ -1,4 +1,4 @@
-package com.shop_Karol_Herzog_Banasik.globalAdviceController;
+package com.shop_Karol_Herzog_Banasik.adviceController;
 
 import com.shop_Karol_Herzog_Banasik.exceptions.NoElementFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -26,8 +26,8 @@ public class ErrorHandling {
         return exMap;
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     Map<String, String> handleConstraintViolationException(MethodArgumentNotValidException exception) {
         HashMap<String, String> exMap = new HashMap<>();
