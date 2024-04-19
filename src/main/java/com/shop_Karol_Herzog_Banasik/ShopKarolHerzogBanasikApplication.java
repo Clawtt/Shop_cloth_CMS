@@ -10,5 +10,4 @@ public class ShopKarolHerzogBanasikApplication {
         SpringApplication.run(ShopKarolHerzogBanasikApplication.class, args);
         System.out.println(System.getProperty("user.dir"));
     }
-
 }
