@@ -47,17 +47,17 @@ public class ImageServiceImpl implements ImageService {
         createDirectory(uploadDirectory);
         for (MultipartFile file : image) {
             Image imageEntity = new Image();
-            String fileName = fileNameProvider(file);
+            String fileNameProvider = fileNameProvider(file);
             byte[] imageBytes = file.getBytes();
 
             if (isValidFile(file)) {
-                Path pathDir = Path.of(uploadDirectory, fileName);
+                Path pathDir = Path.of(uploadDirectory, fileNameProvider);
                 String filePath = Files.write(pathDir, imageBytes).toUri().getPath();
                 imageEntity.setPath(filePath);
                 imageEntity.setProduct(product);
                 imageRepository.save(imageEntity);
             } else {
-                throw new UnexpectedFileTypeException(file.getOriginalFilename() + " unexpected file type");
+                throw new UnexpectedFileTypeException(file.getOriginalFilename() + " is unexpected file type");
             }
         }
     }
@@ -82,6 +82,8 @@ public class ImageServiceImpl implements ImageService {
         Path pathDirectory = Paths.get(directory);
         if (!Files.exists(pathDirectory)) {
             Files.createDirectories(pathDirectory);
+        } else {
+            throw new RuntimeException();
         }
     }
 }
