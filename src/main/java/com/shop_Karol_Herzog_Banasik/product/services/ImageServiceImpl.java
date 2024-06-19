@@ -8,6 +8,7 @@ import com.shop_Karol_Herzog_Banasik.product.repositories.ImageRepository;
 import com.shop_Karol_Herzog_Banasik.product.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +40,8 @@ public class ImageServiceImpl implements ImageService {
      * @param productId product that corresponding with images
      * @throws IOException
      */
-
+    //TODO ogarnij wyjątek w addNewImage
+    //TODO rozbij metodę addNewImage na dwie: 1 - dodawanie do bazy danych 2 - zapisywanie w fs
     @Transactional
     @Override
     public void addNewImage(MultipartFile[] image, Long productId) throws IOException {
