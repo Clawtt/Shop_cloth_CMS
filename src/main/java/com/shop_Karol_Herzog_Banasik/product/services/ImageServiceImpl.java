@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,10 +26,7 @@ public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
     private final ProductRepository productRepository;
-
-    @Value("${image.upload.directory}")
-    private String uploadDirectory;
-//    private String DEFAULT_UPLOAD_DIRECTORY = "images";
+    private final String DIR_DEST = "D:\\images\\pdf\\test";
 
 
     /**
@@ -36,25 +34,23 @@ public class ImageServiceImpl implements ImageService {
      * Method create default directory in work directory named images. You can customize path of directory using
      * application.properties: image.upload.directory=custom/your/directory.
      *
-     * @param image     images to save
+     * @param files     files to save
      * @param productId product that corresponding with images
      * @throws IOException
      */
-    //TODO ogarnij wyjątek w addNewImage
-    //TODO rozbij metodę addNewImage na dwie: 1 - dodawanie do bazy danych 2 - zapisywanie w fs
     @Transactional
     @Override
-    public void addNewImage(MultipartFile[] image, Long productId) throws IOException {
+    public void addNewImageToFileSystem(MultipartFile[] files, Long productId) throws IOException {
         Product product = productRepository.findById(productId).orElseThrow();
-        createDirectory(uploadDirectory);
-        for (MultipartFile file : image) {
+        createDirectory(DIR_DEST);
+        for (MultipartFile file : files) {
             Image imageEntity = new Image();
             String fileNameProvider = fileNameProvider(file);
-            byte[] imageBytes = file.getBytes();
 
             if (isValidFile(file)) {
-                Path pathDir = Path.of(uploadDirectory, fileNameProvider);
-                String filePath = Files.write(pathDir, imageBytes).toUri().getPath();
+                String filePath = DIR_DEST + "\\" + fileNameProvider;
+                Path pathDir = Path.of(filePath);
+                Files.write(pathDir, file.getBytes());
                 imageEntity.setPath(filePath);
                 imageEntity.setProduct(product);
                 imageRepository.save(imageEntity);
@@ -80,12 +76,12 @@ public class ImageServiceImpl implements ImageService {
         return true;
     }
 
-    private void createDirectory(String directory) throws IOException {
-        Path pathDirectory = Paths.get(directory);
-        if (!Files.exists(pathDirectory)) {
-            Files.createDirectories(pathDirectory);
-        } else {
-            throw new RuntimeException();
+    private void createDirectory(String direcotryDestination) throws IOException {
+        File folder = new File(direcotryDestination);
+        Path path = Paths.get(direcotryDestination);
+        Files.createDirectories(path.getParent());
+        if (!folder.exists()) {
+            Files.createDirectories(path.getParent());
         }
     }
 }

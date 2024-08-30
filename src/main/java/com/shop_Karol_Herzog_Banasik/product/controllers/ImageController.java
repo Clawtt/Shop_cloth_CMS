@@ -11,20 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @RestController
 @RequiredArgsConstructor
 public class ImageController {
 
     private final ImageService imageService;
-
-
     @PostMapping(value = "/product/{id}/add/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadImage(@RequestParam(name = "files") MultipartFile[] file,
-                                              @PathVariable String id) throws IOException {
+                                              @PathVariable Long id) throws IOException {
 
-        imageService.addNewImage(file,Long.valueOf(id));
+        imageService.addNewImageToFileSystem(file, id);
         return ResponseEntity.ok().build();
     }
 

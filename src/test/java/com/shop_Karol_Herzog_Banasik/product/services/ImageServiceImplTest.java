@@ -6,23 +6,18 @@ import com.shop_Karol_Herzog_Banasik.product.ProductType;
 import com.shop_Karol_Herzog_Banasik.product.repositories.ImageRepository;
 import com.shop_Karol_Herzog_Banasik.product.repositories.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,7 +66,7 @@ public class ImageServiceImplTest {
         MockMultipartFile mockMultipartFile = new MockMultipartFile(files,files.getBytes());
         MultipartFile[] images = {mockMultipartFile};
         //when
-        imageService.addNewImage(images, product.getId());
+        imageService.addNewImageToFileSystem(images, product.getId());
 
         //then
         verify(imageRepository, times(1)).save(any(Image.class));
