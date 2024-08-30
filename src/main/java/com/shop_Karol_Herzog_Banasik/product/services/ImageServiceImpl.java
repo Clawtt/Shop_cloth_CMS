@@ -30,9 +30,7 @@ public class ImageServiceImpl implements ImageService {
 
 
     /**
-     * Allows saving .jpg .jpeg .png .pdf in hardware and generating uniq name for all files and saving them into database
-     * Method create default directory in work directory named images. You can customize path of directory using
-     * application.properties: image.upload.directory=custom/your/directory.
+     * Allows saving .jpg .jpeg .png in file system and generating uniq name for all files and saving it into database
      *
      * @param files     files to save
      * @param productId product that corresponding with images
@@ -63,17 +61,16 @@ public class ImageServiceImpl implements ImageService {
         LocalDateTimeProvider currentTime = new LocalDateTimeProvider();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
         String formattedDateTime = formatter.format(currentTime.currentTime());
-        return "  size_%d_%s_%s".formatted(file.getSize(), formattedDateTime, file.getOriginalFilename());
+        return "size_%d_%s_%s".formatted(file.getSize(), formattedDateTime, file.getOriginalFilename());
     }
 
     private boolean isValidFile(MultipartFile file) {
         if (file.getOriginalFilename() != null) {
             return file.getOriginalFilename().toLowerCase().endsWith(".jpg") ||
                     file.getOriginalFilename().toLowerCase().endsWith(".jpeg") ||
-                    file.getOriginalFilename().toLowerCase().endsWith(".png") ||
-                    file.getOriginalFilename().toLowerCase().endsWith(".pdf");
+                    file.getOriginalFilename().toLowerCase().endsWith(".png");
         }
-        return true;
+        return false;
     }
 
     private void createDirectory(String direcotryDestination) throws IOException {

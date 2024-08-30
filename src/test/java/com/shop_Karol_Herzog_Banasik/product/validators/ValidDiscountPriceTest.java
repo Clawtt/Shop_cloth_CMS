@@ -14,7 +14,7 @@ public class ValidDiscountPriceTest {
 
 
     @Test
-    public void validDiscountPrice_basePriceIsGreaterThenDiscountPrice_returnTrue() {
+    public void checkDiscountPrice_ShouldReturnTrue_WhenPriceIsGreaterDiscountPrice() {
         //given
         final String BASE_PRICE_FIELD_NAME = "basePrice";
         final String DISCOUNT_PRICE_FIELD_NAME = "basePrice";
@@ -36,7 +36,7 @@ public class ValidDiscountPriceTest {
         Assertions.assertThat(isValid).isTrue();
     }
     @Test
-    public void validDiscountPrice_basePriceIsEqualDiscountPrice_returnTrue() {
+    public void checkDiscountPrice_ShouldReturnTrue_WhenPriceIsEqualDiscountPrice() {
         //given
         final String BASE_PRICE_FIELD_NAME = "basePrice";
         final String DISCOUNT_PRICE_FIELD_NAME = "discountPrice";

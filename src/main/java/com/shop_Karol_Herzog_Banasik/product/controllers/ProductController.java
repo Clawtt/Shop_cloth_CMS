@@ -46,10 +46,10 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/product/{id}")
+    @PutMapping(value = "/product/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductDto> updateProduct(@Valid
-                                                        @RequestBody ProductDto productDto,
-                                                        @PathVariable Long id) {
+                                                    @RequestBody ProductDto productDto,
+                                                    @PathVariable Long id) {
         if (productService.getProductById(id).isPresent()) {
             productService.updateProduct(id, productDto);
             return ResponseEntity.status(HttpStatus.OK).build();
