@@ -54,14 +54,17 @@ public class ProductServiceTest {
         );
         List<ProductType> types = productDto.getTypes()
                 .stream()
-                .map(type -> new ProductType(type.getId(), type.getName()))
+                .map(type -> new ProductType(
+                                type.getId(),
+                                type.getName()))
                 .toList();
 
-        product =  Product.builder()
+        product = Product.builder()
                 .id(null)
                 .name(productDto.getName())
                 .price(productDto.getPrice())
                 .discountPrice(productDto.getDiscountPrice())
+                .types(types)
                 .build();
     }
 

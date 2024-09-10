@@ -6,11 +6,11 @@ import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = PriceGreaterThenDiscountPriceValidator.class)
+@Constraint(validatedBy = ValidDiscountPriceImpl.class)
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PriceGreaterThenDiscountPrice {
-    String message() default "${validatedValue} discountPrice can't be greater than field price";
+public @interface ValidDiscountPrice {
+    String message() default "${validatedValue} discountPrice can't be greater than base price";
 
     Class<?>[] groups() default {};
 

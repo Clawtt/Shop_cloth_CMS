@@ -7,14 +7,14 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 
 
-public class PriceGreaterThenDiscountPriceValidator implements ConstraintValidator<PriceGreaterThenDiscountPrice, Object> {
+public class ValidDiscountPriceImpl implements ConstraintValidator<ValidDiscountPrice, Object> {
 
     private String basePrice;
     private String discountPrice;
 
 
     @Override
-    public void initialize(PriceGreaterThenDiscountPrice constraintAnnotation) {
+    public void initialize(ValidDiscountPrice constraintAnnotation) {
         basePrice = constraintAnnotation.basePrice();
         discountPrice = constraintAnnotation.discountPrice();
     }

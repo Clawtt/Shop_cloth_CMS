@@ -8,10 +8,12 @@ import com.shop_Karol_Herzog_Banasik.product.repositories.ImageRepository;
 import com.shop_Karol_Herzog_Banasik.product.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,40 +26,34 @@ public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
     private final ProductRepository productRepository;
-
-    @Value("${image.upload.directory}")
-    private String uploadDirectory;
-//    private String DEFAULT_UPLOAD_DIRECTORY = "images";
+    private final String DIR_DEST = "D:\\images\\pdf\\test";
 
 
     /**
-     * Allows saving .jpg .jpeg .png .pdf in hardware and generating uniq name for all files and saving them into database
-     * Method create default directory in work directory named images. You can customize path of directory using
-     * application.properties: image.upload.directory=custom/your/directory.
+     * Allows saving .jpg .jpeg .png in file system and generating uniq name for all files and saving it into database
      *
-     * @param image     images to save
+     * @param files     files to save
      * @param productId product that corresponding with images
      * @throws IOException
      */
-
     @Transactional
     @Override
-    public void addNewImage(MultipartFile[] image, Long productId) throws IOException {
+    public void addNewImageToFileSystem(MultipartFile[] files, Long productId) throws IOException {
         Product product = productRepository.findById(productId).orElseThrow();
-        createDirectory(uploadDirectory);
-        for (MultipartFile file : image) {
+        createDirectory(DIR_DEST);
+        for (MultipartFile file : files) {
             Image imageEntity = new Image();
-            String fileName = fileNameProvider(file);
-            byte[] imageBytes = file.getBytes();
+            String fileNameProvider = fileNameProvider(file);
 
             if (isValidFile(file)) {
-                Path pathDir = Path.of(uploadDirectory, fileName);
-                String filePath = Files.write(pathDir, imageBytes).toUri().getPath();
+                String filePath = DIR_DEST + "\\" + fileNameProvider;
+                Path pathDir = Path.of(filePath);
+                Files.write(pathDir, file.getBytes());
                 imageEntity.setPath(filePath);
                 imageEntity.setProduct(product);
                 imageRepository.save(imageEntity);
             } else {
-                throw new UnexpectedFileTypeException(file.getOriginalFilename() + " unexpected file type");
+                throw new UnexpectedFileTypeException(file.getOriginalFilename() + " is unexpected file type");
             }
         }
     }
@@ -65,23 +61,24 @@ public class ImageServiceImpl implements ImageService {
         LocalDateTimeProvider currentTime = new LocalDateTimeProvider();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
         String formattedDateTime = formatter.format(currentTime.currentTime());
-        return "  size_%d_%s_%s".formatted(file.getSize(), formattedDateTime, file.getOriginalFilename());
+        return "size_%d_%s_%s".formatted(file.getSize(), formattedDateTime, file.getOriginalFilename());
     }
 
     private boolean isValidFile(MultipartFile file) {
         if (file.getOriginalFilename() != null) {
             return file.getOriginalFilename().toLowerCase().endsWith(".jpg") ||
                     file.getOriginalFilename().toLowerCase().endsWith(".jpeg") ||
-                    file.getOriginalFilename().toLowerCase().endsWith(".png") ||
-                    file.getOriginalFilename().toLowerCase().endsWith(".pdf");
+                    file.getOriginalFilename().toLowerCase().endsWith(".png");
         }
-        return true;
+        return false;
     }
 
-    private void createDirectory(String directory) throws IOException {
-        Path pathDirectory = Paths.get(directory);
-        if (!Files.exists(pathDirectory)) {
-            Files.createDirectories(pathDirectory);
+    private void createDirectory(String direcotryDestination) throws IOException {
+        File folder = new File(direcotryDestination);
+        Path path = Paths.get(direcotryDestination);
+        Files.createDirectories(path.getParent());
+        if (!folder.exists()) {
+            Files.createDirectories(path.getParent());
         }
     }
 }

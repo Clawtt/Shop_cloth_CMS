@@ -1,7 +1,6 @@
 package com.shop_Karol_Herzog_Banasik.product.dto;
 
-import com.shop_Karol_Herzog_Banasik.product.ProductType;
-import com.shop_Karol_Herzog_Banasik.product.validators.PriceGreaterThenDiscountPrice;
+import com.shop_Karol_Herzog_Banasik.product.validators.ValidDiscountPrice;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-@PriceGreaterThenDiscountPrice(basePrice = "price", discountPrice = "discountPrice")
+@ValidDiscountPrice(basePrice = "price", discountPrice = "discountPrice")
 public class ProductDto {
 
     private Long id;
