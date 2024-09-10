@@ -24,5 +24,4 @@ public class ImageController {
         imageService.addNewImageToFileSystem(file, id);
         return ResponseEntity.ok().build();
     }
-
 }
